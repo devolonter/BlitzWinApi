@@ -2,7 +2,7 @@
 
 typedef BOOL (CALLBACK* SETLAYEREDWINDOWATTRIBUTES)(HWND, COLORREF, BYTE, long);
 
-// дескрипторы окна
+// window descriptor
 extern "C" __declspec(dllexport) HWND WinApi_GetActiveWindow() 
 {	
 	return GetActiveWindow();
@@ -34,7 +34,7 @@ extern "C" __declspec(dllexport) HWND WinApi_WindowFromPoint(const void *in,int 
 	return WindowFromPoint(mouse);	
 }
 
-// окна
+// windows
 extern "C" __declspec(dllexport) HWND WinApi_SetActiveWindow(const void *in,int in_size)
 {
 	HWND window = *(HWND *)in;	
@@ -104,7 +104,7 @@ extern "C" __declspec(dllexport) HRGN WinApi_CreateRectRegion(const void *in,int
 
 
 
-//дескрипторы меню
+//menu descritor
 extern "C" __declspec(dllexport) HMENU WinApi_GetSystemMenu(const void *in,int in_size)
 {
 	HWND window = *(HWND *)in;
@@ -113,7 +113,7 @@ extern "C" __declspec(dllexport) HMENU WinApi_GetSystemMenu(const void *in,int i
 	return GetSystemMenu(window,bRevert);	
 } 
 
-//меню
+//menu
 extern "C" __declspec(dllexport) int WinApi_GetMenuItemCount(const void *in,int in_size)
 {
 	HMENU menu = *(HMENU *)in;
@@ -136,7 +136,7 @@ extern "C" __declspec(dllexport) BYTE WinApi_RemoveMenu(const void *in,int in_si
 	return RemoveMenu(menu,position,flag);	
 }
 
-// стили окна
+// window style
 extern "C" __declspec(dllexport) long WinApi_GetWindowLong(const void *in,int in_size)
 {
 	HWND window = *(HWND *)in;
@@ -173,7 +173,7 @@ extern "C" __declspec(dllexport) long WinApi_SetLayeredWindowAttributes(const vo
 	return bResult;
 }
 
-// мышь
+// mouse
 extern "C" __declspec(dllexport) int WinApi_GlobalMouseX()
 {
 	tagPOINT *pMouse;
@@ -247,7 +247,7 @@ extern "C" __declspec(dllexport) int WinApi_SetImagePointer(const void *in,int i
 }
 
 
-// система
+// system
 extern "C" __declspec(dllexport) BYTE WinApi_GetComputerName(const void *in,int in_size,void *out,int out_sz )
 {
 	char ComputerName[MAX_COMPUTERNAME_LENGTH + 1];
@@ -330,7 +330,7 @@ extern "C" __declspec(dllexport) HINSTANCE WinApi_Shell(const void *in,int in_si
 }
 
 
-// буфер обмена
+// clipboard
 extern "C" __declspec(dllexport) int WinApi_GetClipboardText(const void *in,int in_size,void *out,int out_sz )
 {
 	if (!EmptyClipboard()) 
@@ -400,7 +400,7 @@ extern "C" __declspec(dllexport) int WinApi_SetClipboardText(const void *in,int 
 	return i;
 }
 
-// диалоги
+// dialogs
 extern "C" __declspec(dllexport) int WinApi_ChooseColor(const void *in,int in_size,void *out,int out_sz)
 {
 	CHOOSECOLOR cc;
@@ -528,8 +528,7 @@ extern "C" __declspec(dllexport) int WinApi_MessageBox(const void *in,int in_siz
 	return MessageBox(window,message,caption,flag);
 }
 
- // ини
-
+ // ini
 extern "C" __declspec(dllexport) int WinApi_IniWriteValue(const void *in,int in_size)
 {
 	int len_section = *(int *)in; 
@@ -611,7 +610,7 @@ extern "C" __declspec(dllexport) int WinApi_IniReadValue(const void *in,int in_s
 	return 1;
 }
 
-// реестр
+// reg
 extern "C" __declspec(dllexport) int WinApi_RegWriteValue(const void *in,int in_size)
 {
 	HKEY root = *(HKEY *)in;
@@ -737,7 +736,7 @@ extern "C" __declspec(dllexport) int WinApi_RegDeleteValue(const void *in,int in
 }
 
 
-// действия
+// events
 extern "C" __declspec(dllexport) int WinApi_GetEvent(const void *in,int in_size, void *out,int out_sz)
 {
 	MSG event;	
@@ -821,9 +820,9 @@ extern "C" __declspec(dllexport) int WinApi_GetKey(const void *in,int in_size)
 	return GetKeyState(key);
 }
 
-// гуи
+// gui
 
-// меню
+// menu
 extern "C" __declspec(dllexport) HMENU WinApi_CreatePopupMenu(const void *in,int in_size)
 {
 	HMENU menu;

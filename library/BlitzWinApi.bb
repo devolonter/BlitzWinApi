@@ -44,12 +44,12 @@ Const POINTER_SIZEWE = 32644
 Const POINTER_UPARROW = 32516 
 Const POINTER_WAIT = 32514
 
-Const SW_HIDE = 0 ;Не отображать окно
-Const SW_SHOWMAXIMIZED = 3 ;Отобразить и развернуть на весь экран
-Const SW_SHOWMINIMIZED = 2 ;Отобразить и свернуть
-Const SW_SHOWMINNOACTIVE = 7 ;Отобразить, минимизировать и не передавать фокус
-Const SW_SHOWNOACTIVATE = 4 ;Отобразить и не передавать фокус
-Const SW_SHOWNORMAL = 1 ;Отобразить и передать фокус
+Const SW_HIDE = 0
+Const SW_SHOWMAXIMIZED = 3
+Const SW_SHOWMINIMIZED = 2
+Const SW_SHOWMINNOACTIVE = 7
+Const SW_SHOWNOACTIVATE = 4
+Const SW_SHOWNORMAL = 1
 
 Const WS_BORDER = $800000
 Const WS_CAPTION = $C00000
@@ -110,9 +110,9 @@ Global BWA_DRAG_START = 0
 Global BWA_COLOR_BANK = CreateBank(3)
 Global BWA_MESSAGE_BANK = CreateBank(8)
 
-; не апи функции
+; not api functions
 
-; работа с окнами
+; windows
 Function bSetWindowAlpha (alpha, hWnd%=0)
 	If hWnd = 0 Then hWnd = BWA_CURRENT_HWND
 	bSetWindowLong(-20,$80000,hWnd)
@@ -206,7 +206,7 @@ Function bScreenHeight ()
 	Return bGetWindowHeight(bGetDesktop())
 End Function
 
-; работа с банком цветов
+; color bank
 Function bRequestRed ()
 	Return PeekByte (BWA_COLOR_BANK,0)
 End Function
@@ -219,7 +219,7 @@ Function bRequestBlue ()
 	 Return PeekByte (BWA_COLOR_BANK,2)
 End Function
 
-; работа с сообщениями
+; messages
 Function bGetEventWParam ()
 	Return PeekInt (BWA_MESSAGE_BANK,0)
 End Function
@@ -228,9 +228,9 @@ Function bGetEventLParam ()
 	Return PeekInt (BWA_MESSAGE_BANK,4)
 End Function 
 
-;АПИ функции
+;Api functions
 
-; дескрипторы окон
+; window descriptors
 Function bGetActiveWindow ()
 	Return CallDLL (BWA_DLL_NAME,"WinApi_GetActiveWindow")
 End Function
@@ -258,7 +258,7 @@ Function bGetDesktop ()
 	Return CallDLL (BWA_DLL_NAME,"WinApi_GetDesktop")	
 End Function
 
-; работа с окнами
+; windows
 Function bSetActiveWindow (hWnd%=0)
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	If hWnd = 0 Then hWnd = BWA_CURRENT_HWND
@@ -382,7 +382,7 @@ Function bSetWindowRegion (region%, hwnd% = 0)
 	Return blitzwinapi_result
 End Function
 
-; дескрипторы меню
+; menu descriptors
 Function bGetSystemMenu (revert,hWnd%=0)
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	If hWnd = 0 Then hWnd = BWA_CURRENT_HWND
@@ -394,7 +394,7 @@ Function bGetSystemMenu (revert,hWnd%=0)
 	Return blitzwinapi_result
 End Function
 
-; работа с меню
+; menu
 Function bGetMenuItemCount (hWmnu%)
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	blitzwinapi_bankIn = CreateBank (4)
@@ -425,7 +425,7 @@ Function bRemoveMenu (hWmnu%,position%,flag%)
 	Return blitzwinapi_result
 End Function
 
-; мышь
+; mouse
 Function bGlobalMouseX ()
 	Return CallDLL (BWA_DLL_NAME,"WinApi_GlobalMouseX")	
 End Function
@@ -476,7 +476,7 @@ Function bSwapMouseButton (swap)
 	Return blitzwinapi_result	
 End Function
 
-; система
+; system
 Function bGetComputerName$ ()
 	Local blitzwinapi_result$, blitzwinapi_bankIn, blitzwinapi_bankOut
 	blitzwinapi_bankIn = CreateBank ()
@@ -579,7 +579,7 @@ Function bShell (path$, cmd$ = "", show% = SW_SHOWNORMAL, hWnd = 0)
 	Return blitzwinapi_result	
 End Function
 
-; буфер
+; clipboard
 Function bGetClipboardText$ (buffer = 1024, hWnd%=0)
 	Local blitzwinapi_result$, blitzwinapi_bankIn, blitzwinapi_bankOut
 	If hWnd = 0 Then hWnd = BWA_CURRENT_HWND
@@ -604,7 +604,7 @@ Function bSetClipboardText (txt$,hWnd%=0)
 	Return blitzwinapi_result	
 End Function
 
-; диалоги
+; dialogs
 Function bRequestColor(r=0, g=0, b=0, hWnd%=0)
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	If hWnd = 0 Then hWnd = BWA_CURRENT_HWND
@@ -671,7 +671,7 @@ Function bMessageBox(message$,caption$,flag=MB_OK,hWnd=0)
 	Return blitzwinapi_result	
 End Function
 
-; ини
+; ini
 Function bIniSetValue(section$, key$, value$, ini$="")
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	If ini = "" Then ini = BWA_INI_FILENAME
@@ -709,7 +709,7 @@ Function bIniGetValue$(section$, key$, default_value$=0, ini$="")
 	Return blitzwinapi_result	
 End Function
 
-; реестр
+; reg
 Function bRegSetValue(root, subkey$, key$,value$)
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	blitzwinapi_bankIn = CreateBank (16+Len(subkey)+Len(key)+Len(value)+3)
@@ -765,7 +765,7 @@ Function bRegDeleteValue(root, subkey$, key$)
 	Return blitzwinapi_result	
 End Function
 
-; действия
+; events
 Function bGetEvent(hwnd = 0)
 	Local blitzwinapi_result, blitzwinapi_bankIn
 	If hWnd = 0 Then hWnd = BWA_CURRENT_HWND
@@ -840,8 +840,8 @@ Function bGetKey (key)
 	Return blitzwinapi_result	
 End Function
 
-; гуи
-; меню
+; gui
+; menu
 Function bCreatePopupMenu ()
 	Return  CallDLL (BWA_DLL_NAME,"WinApi_CreatePopupMenu", blitzwinapi_bankIn)	
 End Function
@@ -966,7 +966,7 @@ Function bAddWindowToTray (tip$, hWnd=0)
 End Function
 
 
-; вспомогательные функции
+; additional functions
 Function PokeString(mBankAddr,sStringOut$,iBufferOffset = 0)	
 	For n = 1 To Len(sStringOut$)
 		PokeByte mBankAddr,iBufferOffset,Asc(Mid$(sStringOut$,n,1))
